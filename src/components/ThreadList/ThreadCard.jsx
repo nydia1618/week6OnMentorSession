@@ -1,9 +1,9 @@
-import { getUserName } from '../../services/userService';
+import { getUserName } from "../../services/userService";
 import { Card, Button, Col, Row, Stack } from "react-bootstrap";
-import VoteButtons from '../Shared/VoteButtons';
-import './ThreadCard.css';
+import VoteButtons from "../Shared/VoteButtons";
+import "./ThreadCard.css";
 
-export default function ThreadCard({ thread, goBack }) {
+export default function ThreadCard({ thread, goBack, onSelect }) {
   const voteCount = thread.upvotedBy.length - thread.downvotedBy.length;
 
   const handleUpvote = async () => {
@@ -17,13 +17,24 @@ export default function ThreadCard({ thread, goBack }) {
   return (
     <Card className="single-thread-card">
       <Card.Body>
+        {goBack && (
+          <Button
+            onClick={() => goBack()}
+            variant="link"
+            size="sm"
+            className="back-to-home-btn text-decoration-none"
+          >
+            <i className="bi bi-arrow-left me-2"></i>Back to Home
+          </Button>
+        )}
+
         <Button
-          onClick={goBack}
+          onClick={() => onSelect(thread)}
           variant="link"
           size="sm"
           className="back-to-home-btn text-decoration-none"
         >
-          <i className="bi bi-arrow-left me-2"></i>Back to Home
+          View Comments
         </Button>
 
         <Row className="g-3">
@@ -49,12 +60,16 @@ export default function ThreadCard({ thread, goBack }) {
               <div className="d-flex align-items-center gap-2">
                 <i className="bi bi-person-circle thread-meta-icon"></i>
                 <span>
-                  <strong className="thread-meta-author">{getUserName(thread.author)}</strong>
+                  <strong className="thread-meta-author">
+                    {getUserName(thread.author)}
+                  </strong>
                 </span>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <i className="bi bi-bookmark thread-meta-icon"></i>
-                <span className="badge thread-meta-badge">r/{thread.subredditName}</span>
+                <span className="badge thread-meta-badge">
+                  r/{thread.subredditName}
+                </span>
               </div>
             </div>
           </Col>

@@ -1,17 +1,24 @@
 import { Container } from "react-bootstrap";
-import './ThreadList.css';
+import ThreadCard from "./ThreadCard";
+import "./ThreadList.css";
 
-export default function ThreadList({ threads, onSelect }) {
+export default function ThreadList({ threads, onSelect, goBack }) {
   const handleUpvote = () => {
-    alert('Upvote clicked!');
+    alert("Upvote clicked!");
   };
   const handleDownvote = () => {
-    alert('Downvote clicked!');
+    alert("Downvote clicked!");
   };
 
   return (
     <Container fluid className="px-0">
-      {/* Your Code Here  */}
+      {threads.map((thread, index) => (
+        <ThreadCard
+          key={index}
+          thread={thread}
+          onSelect={(thread) => onSelect(thread)}
+        />
+      ))}
     </Container>
   );
 }
